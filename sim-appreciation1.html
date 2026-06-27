@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat, Para Asisten Magang · SIMAN 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text-primary:   #e8e8f0;
+      --text-secondary: #a8a8c0;
+      --text-muted:     #6a6a88;
+      --text-accent:    #85B7EB;
+      --text-success:   #5DCAA5;
+      --text-warning:   #EF9F27;
+      --surface-card:   rgba(20, 18, 40, 0.82);
+      --surface-card2:  rgba(28, 24, 55, 0.90);
+      --border:         rgba(255,255,255,0.10);
+      --border-accent:  rgba(133,183,235,0.4);
+      --bg-accent:      rgba(24,95,165,0.25);
+      --bg-success:     rgba(15,110,86,0.25);
+      --bg-warning:     rgba(186,117,23,0.25);
+      --fill-accent:    #378ADD;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      background: #07061a;
+      /* Space gradient background */
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(63, 40, 140, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 10%, rgba(24, 60, 130, 0.45) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 70%, rgba(90, 30, 120, 0.40) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 80%, rgba(20, 80, 140, 0.35) 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 90%, rgba(50, 20, 100, 0.50) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    /* Stars canvas */
+    #stars-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 2.5rem;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(26px, 5vw, 44px);
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, #85B7EB, #b085eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      max-width: 560px;
+      margin: 0 auto 0.5rem;
+    }
+
+    .hero-weeks {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 7px 22px;
+      border: 0.5px solid var(--border-accent);
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text-accent);
+      letter-spacing: 0.06em;
+      background: rgba(133,183,235,0.07);
+    }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-hint {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* ── DESKTOP CARDS GRID ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* ── MOBILE CAROUSEL ── */
+    .carousel-wrapper {
+      display: none;
+      position: relative;
+      overflow: hidden;
+      /* show peeking cards on sides */
+      padding: 0 15%;
+      margin: 0 -1.5rem;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.45, 0.05, 0.15, 1.0);
+      gap: 16px;
+      padding: 0 16px;
+      will-change: transform;
+    }
+
+    .carousel-slide {
+      flex: 0 0 70vw;
+      max-width: 300px;
+      min-width: 220px;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      opacity: 0.45;
+      transform: scale(0.93);
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .carousel-nav {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .carousel-btn {
+      background: rgba(133,183,235,0.10);
+      border: 0.5px solid var(--border-accent);
+      color: var(--text-accent);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.2s;
+    }
+
+    .carousel-btn:hover { background: rgba(133,183,235,0.20); }
+    .carousel-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      background: var(--text-accent);
+      transform: scale(1.4);
+    }
+
+    /* ── FLIP CARD ── */
+    .card-scene {
+      height: 490px;
+      perspective: 1000px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .card-scene:focus-visible .card-inner {
+      box-shadow: 0 0 0 3px var(--fill-accent);
+      border-radius: 14px;
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.75s cubic-bezier(0.45, 0.05, 0.15, 1.0);
+      border-radius: 14px;
+    }
+
+    .card-scene.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+      border: 0.5px solid rgba(255,255,255,0.12);
+    }
+
+    /* ── CARD BACK ── */
+    .card-back {
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .card-back-pattern {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.08;
+      color: white;
+    }
+
+    .card-back-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-back-label {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .card-back-tap {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    /* ── CARD FRONT ── */
+    .card-front {
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-card2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .card-art {
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .card-art-yohana   { background: linear-gradient(135deg, rgba(24,95,165,0.35) 0%, rgba(63,40,140,0.45) 100%); }
+    .card-art-nicholas { background: linear-gradient(135deg, rgba(15,110,86,0.35) 0%, rgba(24,95,165,0.40) 100%); }
+    .card-art-filbert  { background: linear-gradient(135deg, rgba(186,117,23,0.35) 0%, rgba(90,30,120,0.40) 100%); }
+
+    .card-photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .card-art-deco {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.18;
+    }
+
+    .card-body {
+      padding: 1.15rem 1.25rem 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-arcana {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .card-name {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 2px 0 1px;
+    }
+
+    .card-title-role {
+      font-size: 11px;
+      color: var(--text-accent);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-desc p { margin-bottom: 4px; }
+    .card-desc p:last-child { margin-bottom: 0; }
+
+    .card-trait {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      align-self: flex-start;
+    }
+
+    .trait-blue   { background: var(--bg-accent);   color: var(--text-accent); }
+    .trait-green  { background: var(--bg-success);  color: var(--text-success); }
+    .trait-amber  { background: var(--bg-warning);  color: var(--text-warning); }
+
+    /* ── TIMELINE ── */
+    .timeline-wrap {
+      position: relative;
+      padding-left: 32px;
+      margin-top: 1.5rem;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 9px;
+      top: 8px;
+      bottom: 8px;
+      width: 0.5px;
+      background: var(--border);
+    }
+
+    .timeline-item { position: relative; margin-bottom: 1.75rem; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -27px;
+      top: 5px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 2px solid #07061a;
+    }
+
+    .dot-blue   { background: #378ADD; }
+    .dot-teal   { background: #1D9E75; }
+    .dot-amber  { background: #BA7517; }
+    .dot-purple { background: #7F77DD; }
+    .dot-coral  { background: #D85A30; }
+    .dot-green  { background: #639922; }
+
+    .timeline-week {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .timeline-topic {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .timeline-detail {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ── CLOSING ── */
+    .closing {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: rgba(20,18,40,0.6);
+      border-radius: 14px;
+      border: 0.5px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+
+    .closing-stars {
+      font-size: 20px;
+      margin-bottom: 1rem;
+      color: var(--text-accent);
+      letter-spacing: 0.5em;
+    }
+
+    .closing-quote {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(13px, 2.2vw, 17px);
+      color: var(--text-primary);
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .closing-sig {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .cards-grid    { display: none; }
+      .carousel-wrapper { display: block; }
+      .carousel-nav  { display: flex; }
+      .section-hint  { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card-inner, .carousel-track, .carousel-slide { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-eyebrow">Sistem Informasi Manajemen · 2026</p>
+    <h1 class="hero-title">Selamat, Para Asisten Magang <span> SIMAN.</span></h1>
+    <p class="hero-subtitle">
+      Kalian telah melewati 14 minggu sebagai asisten magang
+      belajar, mengajar, dan tumbuh bersama.
+      A start to a new journey
+    </p>
+    <span class="hero-weeks">14 Minggu · 3 Asisten · 1 Perjalanan</span>
+  </header>
+
+  <hr class="divider">
+
+  <!-- SECTION LABEL -->
+  <p class="section-label">Kartu Identitas</p>
+  <p class="section-hint">Klik kartu untuk membaliknya</p>
+
+  <!-- ── DESKTOP GRID ── -->
+  <div class="cards-grid" id="desktop-grid">
+
+    <!-- YOHANA -->
+    <div class="card-scene" id="card-yohana"
+         onclick="flipCard('yohana')" onkeydown="handleKey(event,'yohana')"
+         role="button" tabindex="0" aria-label="Kartu Yohana — klik untuk buka">
+      <div class="card-inner">
+        <div class="card-face card-back">
+          <svg class="card-back-pattern" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="100" cy="245" r="200" fill="none" stroke="white" stroke-width="1"/>
+            <circle cx="100" cy="245" r="155" fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="100" cy="245" r="110" fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="100" cy="245" r="65" fill="none" stroke="white" stroke-width="0.5"/>
+            <line x1="0" y1="245" x2="200" y2="245" stroke="white" stroke-width="0.5"/>
+            <line x1="100" y1="45" x2="100" y2="445" stroke="white" stroke-width="0.5"/>
+            <line x1="15" y1="100" x2="185" y2="390" stroke="white" stroke-width="0.5"/>
+            <line x1="185" y1="100" x2="15" y2="390" stroke="white" stroke-width="0.5"/>
+          </svg>
+          <div class="card-back-content">
+            <i class="ti ti-eye" style="font-size:56px;color:var(--text-accent);" aria-hidden="true"></i>
+            <span class="card-back-label">The Curious</span>
+            <span class="card-back-tap"><i class="ti ti-hand-click" aria-hidden="true"></i> Klik untuk buka</span>
+          </div>
+        </div>
+        <div class="card-face card-front">
+          <div class="card-art card-art-yohana">
+            <svg class="card-art-deco" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="100" cy="85" r="65" fill="none" stroke="#85B7EB" stroke-width="1"/>
+              <circle cx="100" cy="85" r="45" fill="none" stroke="#85B7EB" stroke-width="0.5"/>
+              <line x1="35" y1="85" x2="165" y2="85" stroke="#85B7EB" stroke-width="0.5"/>
+              <line x1="100" y1="20" x2="100" y2="150" stroke="#85B7EB" stroke-width="0.5"/>
+              <circle cx="100" cy="38" r="3" fill="#85B7EB"/>
+              <circle cx="137" cy="67" r="3" fill="#85B7EB"/>
+              <circle cx="128" cy="115" r="3" fill="#85B7EB"/>
+              <circle cx="68" cy="110" r="3" fill="#85B7EB"/>
+              <circle cx="62" cy="62" r="3" fill="#85B7EB"/>
+            </svg>
+            <!--
+              GANTI FOTO YOHANA:
+              Ganti tag <i> di bawah dengan: <img src="foto-yohana.jpg" alt="Yohana">
+            -->
+            <div class="card-photo">
+              <i class="ti ti-user" aria-hidden="true" style="font-size:40px;color:#85B7EB;"></i>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="card-arcana">The Curious · I</span>
+            <div class="card-name">Yohana</div>
+            <div class="card-title-role">The Curious</div>
+            <!-- GANTI DESKRIPSI YOHANA -->
+            <div class="card-desc">
+              <p>Satu step menuju long-life learning.</p>
+              <p>Yohana selalu bertanya dan mengkonfirmasi apa yang mungkin dibingungkan.</p>
+              <p>Bertanya tentang materi yang mungkin saja tidak menjadi materi utama.</p>
+              <p>Humble akan ketidaktahuan adalah salah satu trait asisten yang baik.</p>
+            </div>
+            <span class="card-trait trait-blue">Curious</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NICHOLAS -->
+    <div class="card-scene" id="card-nicholas"
+         onclick="flipCard('nicholas')" onkeydown="handleKey(event,'nicholas')"
+         role="button" tabindex="0" aria-label="Kartu Nicholas — klik untuk buka">
+      <div class="card-inner">
+        <div class="card-face card-back">
+          <svg class="card-back-pattern" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="10" width="180" height="470" fill="none" stroke="white" stroke-width="1"/>
+            <rect x="25" y="25" width="150" height="440" fill="none" stroke="white" stroke-width="0.5"/>
+            <rect x="50" y="185" width="100" height="120" fill="none" stroke="white" stroke-width="0.5"/>
+            <line x1="10" y1="10" x2="190" y2="480" stroke="white" stroke-width="0.5"/>
+            <line x1="190" y1="10" x2="10" y2="480" stroke="white" stroke-width="0.5"/>
+          </svg>
+          <div class="card-back-content">
+            <i class="ti ti-shield" style="font-size:56px;color:var(--text-success);" aria-hidden="true"></i>
+            <span class="card-back-label">The Dedicated</span>
+            <span class="card-back-tap"><i class="ti ti-hand-click" aria-hidden="true"></i> Klik untuk buka</span>
+          </div>
+        </div>
+        <div class="card-face card-front">
+          <div class="card-art card-art-nicholas">
+            <svg class="card-art-deco" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="40" y="25" width="120" height="120" fill="none" stroke="#5DCAA5" stroke-width="1"/>
+              <rect x="55" y="40" width="90" height="90" fill="none" stroke="#5DCAA5" stroke-width="0.5"/>
+              <rect x="70" y="55" width="60" height="60" fill="none" stroke="#5DCAA5" stroke-width="0.5"/>
+              <line x1="40" y1="25" x2="160" y2="145" stroke="#5DCAA5" stroke-width="0.5"/>
+              <line x1="160" y1="25" x2="40" y2="145" stroke="#5DCAA5" stroke-width="0.5"/>
+            </svg>
+            <!--
+              GANTI FOTO NICHOLAS:
+              Ganti tag <i> di bawah dengan: <img src="foto-nicholas.jpg" alt="Nicholas">
+            -->
+            <div class="card-photo">
+              <i class="ti ti-user" aria-hidden="true" style="font-size:40px;color:#5DCAA5;"></i>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="card-arcana">The Dedicated · II</span>
+            <div class="card-name">Nicholas</div>
+            <div class="card-title-role">The Dedicated</div>
+            <!-- GANTI DESKRIPSI NICHOLAS -->
+            <div class="card-desc">
+              <p>Dedikasi bukan sekadar kata bagi Nicholas, itu adalah cara bekerja.</p>
+              <p>Setiap tugas diselesaikan dengan penuh tanggung jawab,</p>
+              <p>menjadikannya fondasi yang bisa diandalkan tim.</p>
+              <p>Dedikasi dalam melayani adalah salah satu trait asisten yang baik.</p>
+            </div>
+            <span class="card-trait trait-green">Dedicated</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILBERT -->
+    <div class="card-scene" id="card-filbert"
+         onclick="flipCard('filbert')" onkeydown="handleKey(event,'filbert')"
+         role="button" tabindex="0" aria-label="Kartu Filbert — klik untuk buka">
+      <div class="card-inner">
+        <div class="card-face card-back">
+          <svg class="card-back-pattern" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="100,30 135,90 198,90 148,130 168,192 100,155 32,192 52,130 2,90 65,90"
+                     fill="none" stroke="white" stroke-width="1"/>
+            <polygon points="100,75 126,125 182,125 138,155 156,205 100,175 44,205 62,155 18,125 74,125"
+                     fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="100" cy="340" r="100" fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="100" cy="340" r="65"  fill="none" stroke="white" stroke-width="0.5"/>
+            <circle cx="100" cy="340" r="30"  fill="none" stroke="white" stroke-width="0.5"/>
+          </svg>
+          <div class="card-back-content">
+            <i class="ti ti-star" style="font-size:56px;color:var(--text-warning);" aria-hidden="true"></i>
+            <span class="card-back-label">The Spark</span>
+            <span class="card-back-tap"><i class="ti ti-hand-click" aria-hidden="true"></i> Klik untuk buka</span>
+          </div>
+        </div>
+        <div class="card-face card-front">
+          <div class="card-art card-art-filbert">
+            <svg class="card-art-deco" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polygon points="100,18 132,60 182,60 147,88 162,132 100,108 38,132 53,88 18,60 68,60"
+                       fill="none" stroke="#EF9F27" stroke-width="1"/>
+              <circle cx="100" cy="88" r="30" fill="none" stroke="#EF9F27" stroke-width="0.5"/>
+              <circle cx="100" cy="88" r="9"  fill="#EF9F27" opacity="0.5"/>
+            </svg>
+            <!--
+              GANTI FOTO FILBERT:
+              Ganti tag <i> di bawah dengan: <img src="foto-filbert.jpg" alt="Filbert">
+            -->
+            <div class="card-photo">
+              <i class="ti ti-user" aria-hidden="true" style="font-size:40px;color:#EF9F27;"></i>
+            </div>
+          </div>
+          <div class="card-body">
+            <span class="card-arcana">The Spark · III</span>
+            <div class="card-name">Filbert</div>
+            <div class="card-title-role">The Fun</div>
+            <!-- GANTI DESKRIPSI FILBERT -->
+            <div class="card-desc">
+              <p>Di mana ada Filbert, ada energi.</p>
+              <p>Kemampuannya membuat suasana kelas menjadi hidup</p>
+              <p>adalah hadiah yang tak ternilai. Ceria adalah jembatan asisten dan yang diajar,</p>
+              <p>dan adalah salah satu trait asisten yang baik.</p>
+            </div>
+            <span class="card-trait trait-amber">Fun</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /desktop grid -->
+
+  <!-- ── MOBILE CAROUSEL ── -->
+  <div class="carousel-wrapper" id="carousel-wrapper">
+    <div class="carousel-track" id="carousel-track">
+
+      <!-- YOHANA mobile -->
+      <div class="carousel-slide active" id="slide-0">
+        <div class="card-scene" id="mob-card-yohana"
+             onclick="flipCard('mob-yohana')" onkeydown="handleKey(event,'mob-yohana')"
+             role="button" tabindex="0" aria-label="Kartu Yohana">
+          <div class="card-inner">
+            <div class="card-face card-back">
+              <svg class="card-back-pattern" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="100" cy="245" r="200" fill="none" stroke="white" stroke-width="1"/>
+                <circle cx="100" cy="245" r="155" fill="none" stroke="white" stroke-width="0.5"/>
+                <circle cx="100" cy="245" r="110" fill="none" stroke="white" stroke-width="0.5"/>
+                <line x1="0" y1="245" x2="200" y2="245" stroke="white" stroke-width="0.5"/>
+                <line x1="100" y1="45" x2="100" y2="445" stroke="white" stroke-width="0.5"/>
+              </svg>
+              <div class="card-back-content">
+                <i class="ti ti-eye" style="font-size:52px;color:var(--text-accent);" aria-hidden="true"></i>
+                <span class="card-back-label">The Seeker</span>
+                <span class="card-back-tap"><i class="ti ti-hand-click" aria-hidden="true"></i> Klik untuk buka</span>
+              </div>
+            </div>
+            <div class="card-face card-front">
+              <div class="card-art card-art-yohana">
+                <svg class="card-art-deco" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="100" cy="85" r="65" fill="none" stroke="#85B7EB" stroke-width="1"/>
+                  <circle cx="100" cy="85" r="45" fill="none" stroke="#85B7EB" stroke-width="0.5"/>
+                  <line x1="35" y1="85" x2="165" y2="85" stroke="#85B7EB" stroke-width="0.5"/>
+                  <line x1="100" y1="20" x2="100" y2="150" stroke="#85B7EB" stroke-width="0.5"/>
+                </svg>
+                <div class="card-photo">
+                  <i class="ti ti-user" aria-hidden="true" style="font-size:40px;color:#85B7EB;"></i>
+                </div>
+              </div>
+              <div class="card-body">
+                <span class="card-arcana">The Seeker · I</span>
+                <div class="card-name">Yohana</div>
+                <div class="card-title-role">The Curious</div>
+                <div class="card-desc">
+                  <p>Satu step menuju long-life learning.</p>
+                  <p>Yohana selalu bertanya dan mengkonfirmasi apa yang mungkin dibingungkan.</p>
+                  <p>Bertanya tentang materi yang mungkin saja tidak menjadi materi utama.</p>
+                  <p>Humble akan ketidaktahuan adalah salah satu trait asisten yang baik.</p>
+                </div>
+                <span class="card-trait trait-blue">Curious</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NICHOLAS mobile -->
+      <div class="carousel-slide" id="slide-1">
+        <div class="card-scene" id="mob-card-nicholas"
+             onclick="flipCard('mob-nicholas')" onkeydown="handleKey(event,'mob-nicholas')"
+             role="button" tabindex="0" aria-label="Kartu Nicholas">
+          <div class="card-inner">
+            <div class="card-face card-back">
+              <svg class="card-back-pattern" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="10" y="10" width="180" height="470" fill="none" stroke="white" stroke-width="1"/>
+                <rect x="25" y="25" width="150" height="440" fill="none" stroke="white" stroke-width="0.5"/>
+                <line x1="10" y1="10" x2="190" y2="480" stroke="white" stroke-width="0.5"/>
+                <line x1="190" y1="10" x2="10" y2="480" stroke="white" stroke-width="0.5"/>
+              </svg>
+              <div class="card-back-content">
+                <i class="ti ti-shield" style="font-size:52px;color:var(--text-success);" aria-hidden="true"></i>
+                <span class="card-back-label">The Pillar</span>
+                <span class="card-back-tap"><i class="ti ti-hand-click" aria-hidden="true"></i> Klik untuk buka</span>
+              </div>
+            </div>
+            <div class="card-face card-front">
+              <div class="card-art card-art-nicholas">
+                <svg class="card-art-deco" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="40" y="25" width="120" height="120" fill="none" stroke="#5DCAA5" stroke-width="1"/>
+                  <rect x="55" y="40" width="90" height="90" fill="none" stroke="#5DCAA5" stroke-width="0.5"/>
+                  <line x1="40" y1="25" x2="160" y2="145" stroke="#5DCAA5" stroke-width="0.5"/>
+                  <line x1="160" y1="25" x2="40" y2="145" stroke="#5DCAA5" stroke-width="0.5"/>
+                </svg>
+                <div class="card-photo">
+                  <i class="ti ti-user" aria-hidden="true" style="font-size:40px;color:#5DCAA5;"></i>
+                </div>
+              </div>
+              <div class="card-body">
+                <span class="card-arcana">The Pillar · II</span>
+                <div class="card-name">Nicholas</div>
+                <div class="card-title-role">The Dedicated</div>
+                <div class="card-desc">
+                  <p>Dedikasi bukan sekadar kata bagi Nicholas, itu adalah cara bekerja.</p>
+                  <p>Setiap tugas diselesaikan dengan penuh tanggung jawab,</p>
+                  <p>menjadikannya fondasi yang bisa diandalkan tim.</p>
+                  <p>Dedikasi dalam melayani adalah salah satu trait asisten yang baik.</p>
+                </div>
+                <span class="card-trait trait-green">Dedicated</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILBERT mobile -->
+      <div class="carousel-slide" id="slide-2">
+        <div class="card-scene" id="mob-card-filbert"
+             onclick="flipCard('mob-filbert')" onkeydown="handleKey(event,'mob-filbert')"
+             role="button" tabindex="0" aria-label="Kartu Filbert">
+          <div class="card-inner">
+            <div class="card-face card-back">
+              <svg class="card-back-pattern" viewBox="0 0 200 490" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <polygon points="100,30 135,90 198,90 148,130 168,192 100,155 32,192 52,130 2,90 65,90"
+                         fill="none" stroke="white" stroke-width="1"/>
+                <circle cx="100" cy="340" r="100" fill="none" stroke="white" stroke-width="0.5"/>
+                <circle cx="100" cy="340" r="55"  fill="none" stroke="white" stroke-width="0.5"/>
+              </svg>
+              <div class="card-back-content">
+                <i class="ti ti-star" style="font-size:52px;color:var(--text-warning);" aria-hidden="true"></i>
+                <span class="card-back-label">The Spark</span>
+                <span class="card-back-tap"><i class="ti ti-hand-click" aria-hidden="true"></i> Klik untuk buka</span>
+              </div>
+            </div>
+            <div class="card-face card-front">
+              <div class="card-art card-art-filbert">
+                <svg class="card-art-deco" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <polygon points="100,18 132,60 182,60 147,88 162,132 100,108 38,132 53,88 18,60 68,60"
+                           fill="none" stroke="#EF9F27" stroke-width="1"/>
+                  <circle cx="100" cy="88" r="30" fill="none" stroke="#EF9F27" stroke-width="0.5"/>
+                </svg>
+                <div class="card-photo">
+                  <i class="ti ti-user" aria-hidden="true" style="font-size:40px;color:#EF9F27;"></i>
+                </div>
+              </div>
+              <div class="card-body">
+                <span class="card-arcana">The Spark · III</span>
+                <div class="card-name">Filbert</div>
+                <div class="card-title-role">The Fun</div>
+                <div class="card-desc">
+                  <p>Di mana ada Filbert, ada energi.</p>
+                  <p>Kemampuannya membuat suasana kelas menjadi hidup</p>
+                  <p>adalah hadiah yang tak ternilai. Ceria adalah jembatan asisten dan yang diajar,</p>
+                  <p>dan adalah salah satu trait asisten yang baik.</p>
+                </div>
+                <span class="card-trait trait-amber">Fun</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /carousel-track -->
+  </div><!-- /carousel-wrapper -->
+
+  <!-- MOBILE NAV -->
+  <div class="carousel-nav" id="carousel-nav">
+    <button class="carousel-btn" id="btn-prev" onclick="carouselMove(-1)" aria-label="Kartu sebelumnya" disabled>
+      <i class="ti ti-arrow-left" aria-hidden="true"></i>
+    </button>
+    <div class="carousel-dots">
+      <div class="carousel-dot active" onclick="carouselGo(0)"></div>
+      <div class="carousel-dot" onclick="carouselGo(1)"></div>
+      <div class="carousel-dot" onclick="carouselGo(2)"></div>
+    </div>
+    <button class="carousel-btn" id="btn-next" onclick="carouselMove(1)" aria-label="Kartu berikutnya">
+      <i class="ti ti-arrow-right" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TIMELINE -->
+  <p class="section-label">Perjalanan 14 Minggu</p>
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-blue"></div>
+      <div class="timeline-week">Minggu 2-4</div>
+      <div class="timeline-topic">Flowchart</div>
+      <div class="timeline-detail">
+        Fondasi database dan menggambarkan alur proses bisnis dari awal hingga akhir dengan logika yang jelas.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-teal"></div>
+      <div class="timeline-week">Minggu 5-6</div>
+      <div class="timeline-topic"> Relationship dan Database Objects</div>
+      <div class="timeline-detail">
+        Tentang relasi antar object, merancang hubungan antar entitas
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-purple"></div>
+      <div class="timeline-week">Minggu 8-9</div>
+      <div class="timeline-topic">Table, Form, Query, Report</div>
+      <div class="timeline-detail">
+        Dari teori ke praktik: membuat table, query, form, dan report langsung di sistem manajemen database nyata.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-amber"></div>
+      <div class="timeline-week">Minggu 10-11</div>
+      <div class="timeline-topic">Security in Database</div>
+      <div class="timeline-detail">
+        Mengenal ancaman nyata dan cara melindungi data karena sistem yang baik adalah sistem yang aman.
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot dot-coral"></div>
+      <div class="timeline-week">Minggu 12</div>
+      <div class="timeline-topic">ERP, CRM &amp; SCM</div>
+      <div class="timeline-detail">
+        Memahami bagaimana sistem informasi bekerja di dunia bisnis nyata secara menyeluruh.
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <div class="closing-stars" aria-hidden="true">✦ ✦ ✦</div>
+    <!-- GANTI KUTIPAN DI BAWAH INI -->
+    <p class="closing-quote">
+      "Whatever the result, be proud of yourselves.
+      You made it today, and you'll made it tomorrow and ever,
+      as long as you keep fighting"
+    </p>
+    <p class="closing-sig">Dengan bangga, Elrond · 2026</p>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+  /* ── STARS ── */
+  (function() {
+    var canvas = document.getElementById('stars-canvas');
+    var ctx = canvas.getContext('2d');
+    var stars = [];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      var count = Math.floor((canvas.width * canvas.height) / 5000);
+      for (var i = 0; i < count; i++) {
+        stars.push({
+          x:    Math.random() * canvas.width,
+          y:    Math.random() * canvas.height,
+          r:    Math.random() * 1.2 + 0.2,
+          a:    Math.random(),
+          da:   (Math.random() * 0.003 + 0.001) * (Math.random() < 0.5 ? 1 : -1)
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        s.a += s.da;
+        if (s.a > 1 || s.a < 0.1) s.da = -s.da;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + s.a + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    initStars();
+    draw();
+    window.addEventListener('resize', function() { resize(); initStars(); });
+  })();
+
+  /* ── FLIP ── */
+  function flipCard(name) {
+    var el = document.getElementById('card-' + name) || document.getElementById('mob-card-' + name);
+    if (el) el.classList.toggle('flipped');
+  }
+
+  function handleKey(e, name) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipCard(name); }
+  }
+
+  /* ── CAROUSEL ── */
+  var current = 0;
+  var total   = 3;
+
+  function carouselGo(idx) {
+    current = Math.max(0, Math.min(total - 1, idx));
+    var slides    = document.querySelectorAll('.carousel-slide');
+    var dots      = document.querySelectorAll('.carousel-dot');
+    var track     = document.getElementById('carousel-track');
+    var wrapper   = document.getElementById('carousel-wrapper');
+    var slideW    = slides[0] ? slides[0].offsetWidth : 0;
+    var gap       = 16;
+    var wrapW     = wrapper.offsetWidth;
+    var offset    = (wrapW / 2) - (slideW / 2) - current * (slideW + gap);
+
+    track.style.transform = 'translateX(' + offset + 'px)';
+
+    slides.forEach(function(s, i) {
+      s.classList.toggle('active', i === current);
+    });
+    dots.forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+    });
+
+    document.getElementById('btn-prev').disabled = (current === 0);
+    document.getElementById('btn-next').disabled = (current === total - 1);
+  }
+
+  function carouselMove(dir) { carouselGo(current + dir); }
+
+  /* init carousel on load */
+  window.addEventListener('load', function() { carouselGo(0); });
+  window.addEventListener('resize', function() { carouselGo(current); });
+
+  /* swipe support */
+  (function() {
+    var wrapper = document.getElementById('carousel-wrapper');
+    var startX  = 0;
+    wrapper.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+    wrapper.addEventListener('touchend',   function(e) {
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) carouselMove(dx < 0 ? 1 : -1);
+    });
+  })();
+</script>
+</body>
+</html>
